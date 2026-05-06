@@ -33,13 +33,33 @@ app.use(helmet());
 app.use(mongoSanitize());
 
 // CORS
+// app.use(
+//    cors({
+//       origin: [
+//          process.env.CLIENT_URL1,
+//          process.env.CLIENT_URL2,
+//          "http://localhost:3000",
+//          "http://localhost:3001",
+//          "http://localhost:3002",
+//       ],
+//       credentials: true,
+//       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+//       allowedHeaders: ["Content-Type", "Authorization"],
+//    }),
+// );
+
+const allowedOrigins = [
+   process.env.CLIENT_URL1,
+   process.env.CLIENT_URL2,
+   "http://localhost:3000",
+   "http://localhost:3001",
+   "http://localhost:3002",
+].filter(Boolean) as string[];
+
+// CORS
 app.use(
    cors({
-      origin: [
-         process.env.CLIENT_URL || "http://localhost:3000",
-         "http://localhost:3001",
-         "http://localhost:3002",
-      ],
+      origin: allowedOrigins,
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
